@@ -28,6 +28,8 @@ var computer = {
         score: 0
     };
 
+window.onload = setGameElements();    
+
 // add listener
 
 newGameBtn.addEventListener('click', newGame);
@@ -90,11 +92,13 @@ function checkRoundWinner(playerPick, computerPick) {
       if (winnerIs == 'player') {
           playerResultElem.innerHTML = "Win!";
           player.score++;
+          setGamePoints();
       } else if (winnerIs == 'computer') {
           computerResultElem.innerHTML = "Win!";
           computer.score++;
+          setGamePoints();
       }
-  
+    checkGameWiner();  
   }
 
 function setGamePoints() {
@@ -102,10 +106,20 @@ function setGamePoints() {
     computerPointsElem.innerHTML = computer.score;
 }
 
-  function playerPick(playerPick) {
-    var computerPick = getComputerPick();
+function playerPick(playerPick) {
+   var computerPick = getComputerPick();
+   playerPickElem.innerHTML = playerPick;
+   computerPickElem.innerHTML = computerPick;
+   checkRoundWinner(playerPick, computerPick);
+}
 
-    playerPickElem.innerHTML = playerPick;
-    computerPickElem.innerHTML = computerPick;
-    checkRoundWinner(playerPick, computerPick);
+function checkGameWiner() {
+    var playerWinGame;    
+    if (player.score == 10 || computer.score == 10) {
+        gameState = 'ended';
+        if (player.score == 10) {
+            alert('You are the Winner!! Congratulations')
+        } else alert('I\'m very sorry but this time the Winner is Computer')
+        setGameElements();
+    }
 }
